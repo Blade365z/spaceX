@@ -4,6 +4,7 @@ import LoginForm from './Login/LoginForm'
 import { BrowserRouter as Router, Redirect, Route, Switch } from 'react-router-dom';
 import { getLogInStateFromLocalStorage } from './Login/helper';
 import DashBoard from './Dashboard/DashBoard';
+import DashboardRoute from './Dashboard/DashboardRoute';
 
 
 class App extends Component {
@@ -18,13 +19,14 @@ class App extends Component {
             <Router>
                 <Switch>
                     <Route exact path="/">
-                        {this.state.isAuth ?
+                        {this.state.isAuth === true ?
                             <Redirect to="/home" /> :
                             <Redirect to="/login" />
                         }
                     </Route>
                     <Route exact path="/login" component={LoginForm} />
-                    <Route exact path="/home" component={DashBoard} />
+                    <DashboardRoute path="/home"  isAuth={this.state.isAuth} component={DashBoard} />
+
                     <Route path="*" component={() => {
                         return <div>404 Not Found.</div>
                     }} />
